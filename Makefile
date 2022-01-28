@@ -1,20 +1,24 @@
 HOSTNAME=olukotun-ts
 NAME=circleci-terraform-provider
 
-default: install
+default: 
+	make install
 
 build:
+	go get -d ./...
 	go build -o ${NAME}
 
 fmt:
-	gofmt -s -w $(find . -name '*.go')
+	gofmt -s -w .
 
 lint:
 	golangci-lint run ./...
 
-install: build
+install: 
+	make fmt
+	make build
 	mkdir -p ~/terraform.d/plugins/olukotun-ts/circleci-terraform-provider
-	~/terraform.d/plugins/${HOSTNAME}/${NAME}
+	mv ${NAME} ~/terraform.d/plugins/${HOSTNAME}/${NAME}
 
 test:
 	go test ./...

@@ -2,6 +2,7 @@ package circleci
 
 import (
 	"context"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/olukotun-ts/circleci-client-go/circleci"
@@ -10,51 +11,55 @@ import (
 func resourceProject() *schema.Resource {
 	return &schema.Resource{
 		CreateContext: resourceProjectCreate,
-		ReadContext: resourceProjectRead,
+		ReadContext:   resourceProjectRead,
 		DeleteContext: resourceProjectDelete,
 		Schema: map[string]*schema.Schema{
 			"slug": {
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"organization": {
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"name": {
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"branch": {
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Computed: true,
 			},
-		}
+		},
 	}
 }
 
-func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) error {
+func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	client := meta.(*circleci.Client)
 
-	_, err := client.Projects.Follow(ctx, d.Get("slug"), d.Get("branch"))
+	var diags diag.Diagnostics
+
+	slug := d.Get("slug").(string)
+	branch := d.Get("branch").(string)
+	_, err := client.Projects.Follow(ctx, slug, branch)
 	if err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 
-	err := resourceProjectRead(ctx, d, meta)
-	if err != nil {
-		return err
-	}
+	resourceProjectRead(ctx, d, meta)
 
-	return nil
+	return diags
 }
 
-func resourceProjectRead(ctx context.Context, d *schema.ResourceData, meta interface{}) error {
+func resourceProjectRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	client := meta.(*circleci.Client)
 
-	project, err := client.Projects.Get(ctx, d.Get("slug"))
+	var diags diag.Diagnostics
+
+	slug := d.Get("slug").(string)
+	project, err := client.Projects.Get(ctx, slug)
 	if err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 
 	d.SetId(project.Name)
@@ -62,16 +67,19 @@ func resourceProjectRead(ctx context.Context, d *schema.ResourceData, meta inter
 	d.Set("name", project.Name)
 	d.Set("slug", project.Slug)
 
-	return nil
+	return diags
 }
 
-func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) error {
+func resourceProjectDelete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	client := meta.(*circleci.Client)
 
-	_, err := client.Projects.Unfollow(ctx, d.Get("slug"))
+	var diags diag.Diagnostics
+
+	slug := d.Get("slug").(string)
+	_, err := client.Projects.Unfollow(ctx, slug)
 	if err != nil {
-		return err
+		return diag.FromErr(err)
 	}
 
-	return nil
+	return diags
 }
