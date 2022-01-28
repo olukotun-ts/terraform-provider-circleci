@@ -1,9 +1,20 @@
-NAME=circleci
-BINARY=terraform-provider-${NAME}
-VERSION=0.0.1
-OS_ARCH=darwin_amd64
+HOSTNAME=olukotun-ts
+NAME=circleci-terraform-provider
 
-default: build
+default: install
 
 build:
-	go build -o ${BINARY}
+	go build -o ${NAME}
+
+fmt:
+	gofmt -s -w $(find . -name '*.go')
+
+lint:
+	golangci-lint run ./...
+
+install: build
+	mkdir -p ~/terraform.d/plugins/olukotun-ts/circleci-terraform-provider
+	~/terraform.d/plugins/${HOSTNAME}/${NAME}
+
+test:
+	go test ./...
