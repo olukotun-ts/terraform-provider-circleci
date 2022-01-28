@@ -8,7 +8,7 @@ import (
 	"github.com/olukotun-ts/circleci-client-go/circleci"
 )
 
-func resourceProject() *schema.Resource {
+func resourceCircleCIProject() *schema.Resource {
 	return &schema.Resource{
 		CreateContext: resourceProjectCreate,
 		ReadContext:   resourceProjectRead,

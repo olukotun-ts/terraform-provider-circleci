@@ -8,7 +8,7 @@ import (
 	"github.com/olukotun-ts/circleci-client-go/circleci"
 )
 
-func dataSourceProject() *schema.Resource {
+func dataSourceCircleCIProject() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceProjectRead,
 		Schema: map[string]*schema.Schema{

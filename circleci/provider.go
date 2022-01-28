@@ -11,10 +11,10 @@ import (
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		ResourcesMap: map[string]*schema.Resource{
-			"project": resourceProject(),
+			"circleci_project": resourceCircleCIProject(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"project": dataSourceProject(),
+			"circleci_project": dataSourceCircleCIProject(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}
