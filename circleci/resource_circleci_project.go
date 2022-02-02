@@ -23,7 +23,8 @@ func resourceCircleCIProject() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"slug": {
 				Type:     schema.TypeString,
-				Computed: true,
+				Required: true,
+				ForceNew: true,
 			},
 			"organization": {
 				Type:     schema.TypeString,
@@ -35,7 +36,9 @@ func resourceCircleCIProject() *schema.Resource {
 			},
 			"branch": {
 				Type:     schema.TypeString,
-				Computed: true,
+				Optional: true,
+				Default:  "master",
+				ForceNew: true,
 			},
 		},
 	}
@@ -47,12 +50,12 @@ func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta int
 
 	var diags diag.Diagnostics
 
-	// slug := d.Get("slug").(string)
-	// branch := d.Get("branch").(string)
+	slug := d.Get("slug").(string)
+	branch := d.Get("branch").(string)
 	// name := d.Get("name").(string)
 
-	slug := "gh/olukotun-ts/name-button"
-	branch := "master"
+	// slug := "gh/olukotun-ts/name-button"
+	// branch := "master"
 
 	// ###############################
 
@@ -80,6 +83,8 @@ func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta int
 	// set ID
 	// do stuff...
 	d.Set("slug", slug)
+
+	// Todo: To avoid errors from race condition, use d.Set() instead
 	resourceProjectRead(ctx, d, meta)
 	return diags
 
