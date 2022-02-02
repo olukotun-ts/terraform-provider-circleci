@@ -8,7 +8,9 @@ terraform {
 }
 
 resource "circleci_project" "demo" {
+    # name = "demo"
     # slug = "gh/olukotun-ts/name-button"
+    # branch = "master"
 }
 
 # output "demo" {
