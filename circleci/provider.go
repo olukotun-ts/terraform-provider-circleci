@@ -12,9 +12,11 @@ func Provider() *schema.Provider {
 	return &schema.Provider{
 		ResourcesMap: map[string]*schema.Resource{
 			"circleci_project": resourceCircleCIProject(),
+			"circleci_user":    resourceCircleCIUser(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"circleci_project": dataSourceCircleCIProject(),
+			"circleci_user":    dataSourceCircleCIUser(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}

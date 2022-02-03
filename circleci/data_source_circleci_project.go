@@ -8,6 +8,7 @@ import (
 	"github.com/olukotun-ts/circleci-client-go/circleci"
 )
 
+// Todo: Figure out if schema should be same as in resource_circleci_project.go
 func dataSourceCircleCIProject() *schema.Resource {
 	return &schema.Resource{
 		ReadContext: dataSourceProjectRead,

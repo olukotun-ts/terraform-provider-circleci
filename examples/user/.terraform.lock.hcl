@@ -5,6 +5,6 @@ provider "github.com/olukotun-ts/circleci" {
   version     = "0.0.1"
   constraints = "0.0.1"
   hashes = [
-    "h1:XNRNSPnJrF4MAYdZXTg3nTckMsOVVGuXGlBdjkmVlX0=",
+    "h1:qze4IHZvdOzCBoHduTxjNVIjER9OeeroF0Fb8hCMAX0=",
   ]
 }

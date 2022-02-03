@@ -4,7 +4,8 @@ go 1.17
 
 require (
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.10.1
-	github.com/olukotun-ts/circleci-client-go v0.0.0-20220128012750-7871da9e46ee
+	github.com/olukotun-ts/circleci-client-go v0.0.1
+	github.com/zclconf/go-cty v1.9.1
 )
 
 require (
@@ -36,7 +37,6 @@ require (
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/oklog/run v1.0.0 // indirect
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
-	github.com/zclconf/go-cty v1.9.1 // indirect
 	golang.org/x/net v0.0.0-20210326060303-6b1517762897 // indirect
 	golang.org/x/sys v0.0.0-20210615035016-665e8c7367d1 // indirect
 	golang.org/x/text v0.3.5 // indirect

@@ -38,7 +38,6 @@ func resourceCircleCIProject() *schema.Resource {
 	}
 }
 
-// Todo: Explore error vs Diagnostics
 func resourceProjectCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	client := meta.(*circleci.Client)
 
